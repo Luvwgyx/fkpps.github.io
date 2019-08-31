@@ -62,7 +62,7 @@
 <meta property="og:site_name" content="Luvwgyx 的博客">
 <meta property="og:description" content="传送门：洛谷Solution同[洛谷1962]斐波那契数列理，只是转移方程变成了$f_i=pf_{i-1}+qf_{i-2}$而已，那么我们只需要将辅助转移矩阵变为下面这样就可以了：$$\left[\begin{matrix}p &amp;amp; q\1 &amp;amp; 0 \\end{matrix}\right]$$">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-31T08:37:34.100Z">
+<meta property="og:updated_time" content="2019-08-31T13:04:35.043Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="test">
 <meta name="twitter:description" content="传送门：洛谷Solution同[洛谷1962]斐波那契数列理，只是转移方程变成了$f_i=pf_{i-1}+qf_{i-2}$而已，那么我们只需要将辅助转移矩阵变为下面这样就可以了：$$\left[\begin{matrix}p &amp;amp; q\1 &amp;amp; 0 \\end{matrix}\right]$$">
@@ -272,7 +272,7 @@
                 
               
 
-              <time title="创建时间：2019-08-31 16:30:30 / 修改时间：16:37:34" itemprop="dateCreated datePublished" datetime="2019-08-31T16:30:30+08:00">2019-08-31</time>
+              <time title="创建时间：2019-08-31 16:30:30 / 修改时间：21:04:35" itemprop="dateCreated datePublished" datetime="2019-08-31T16:30:30+08:00">2019-08-31</time>
             </span>
           
             
@@ -517,53 +517,9 @@
   
     
       
-<script type="text/x-mathjax-config">
-    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
-
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
-      processEscapes: true,
-      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {
-        extensions: ['[mhchem]/mhchem.js'],
-      equationNumbers: {
-        autoNumber: 'AMS'
-      }
-    }
-  });
-
-  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
-    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
-      if (data.display) {
-        var next = data.script.nextSibling;
-        while (next && next.nodeName.toLowerCase() === '#text') {
-          next = next.nextSibling;
-        }
-        if (next && next.nodeName.toLowerCase() === 'br') {
-          next.parentNode.removeChild(next);
-        }
-      }
-    });
-  });
-
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for (i = 0; i < all.length; i += 1) {
-      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
-      if (element.nodeName.toLowerCase() == 'li') {
-        element = element.parentNode;
-      }
-      element.classList.add('has-jax');
-    }
-  });
-</script>
-<script>
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
-    MathJax.Hub.Typeset();
-  }, window.MathJax);
-</script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js">
+  <script src="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.js"></script>
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/katex@0/dist/contrib/copy-tex.min.css">
 
     
   
