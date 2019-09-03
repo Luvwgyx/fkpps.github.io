@@ -392,6 +392,9 @@ G_y+sum_y\times(sum_i-sum_y) \geqslant G_x+sum_x \times (sum_i-sum_x)
 
           </div>
           
+    
+    <div class="comments" id="gitalk-container"></div>
+  
 
         </div>
           
@@ -711,6 +714,25 @@ G_y+sum_y\times(sum_i-sum_y) \geqslant G_x+sum_x \times (sum_i-sum_x)
   
 
   
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.css">
+
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js', () => {
+    var gitalk = new Gitalk({
+      clientID: '05fa2b6c0e46ba25dd32',
+      clientSecret: 'd95c41d27834da1a43c690a9bc69ffc7a8595db',
+      repo: 'Luvwgyx.github.io',
+      owner: 'Luvwgyx',
+      admin: ['Luvwgyx'],
+      id: '868e19f0523e323e84c6a92198b31628',
+        language: 'zh-CN',
+      
+      distractionFreeMode: 'true'
+    });
+    gitalk.render('gitalk-container');
+  }, window.Gitalk);
+</script>
 
 </body>
 </html>
