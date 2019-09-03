@@ -56,18 +56,18 @@
 </script>
 
   <meta name="description" content="题目链接 BZOJ 洛谷">
-<meta name="keywords" content="斜率优化DP">
+<meta name="keywords" content="DP,最短路">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[BZOJ3675][Apio2014]序列分割">
-<meta property="og:url" content="http://yoursite.com/2019/09/02/BZOJ3675-Apio2014-序列分割/index.html">
+<meta property="og:title" content="[BZOJ1003][ZJOI2006]物流运输">
+<meta property="og:url" content="http://yoursite.com/2019/09/03/BZOJ1003-ZJOI2006-物流运输/index.html">
 <meta property="og:site_name" content="Luvwgyx 的博客">
 <meta property="og:description" content="题目链接 BZOJ 洛谷">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-02T02:34:59.939Z">
+<meta property="og:updated_time" content="2019-09-03T04:08:30.788Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[BZOJ3675][Apio2014]序列分割">
+<meta name="twitter:title" content="[BZOJ1003][ZJOI2006]物流运输">
 <meta name="twitter:description" content="题目链接 BZOJ 洛谷">
-  <link rel="canonical" href="http://yoursite.com/2019/09/02/BZOJ3675-Apio2014-序列分割/">
+  <link rel="canonical" href="http://yoursite.com/2019/09/03/BZOJ1003-ZJOI2006-物流运输/">
 
 
 <script id="page-configurations">
@@ -81,7 +81,7 @@
   };
 </script>
 
-  <title>[BZOJ3675][Apio2014]序列分割 | Luvwgyx 的博客</title>
+  <title>[BZOJ1003][ZJOI2006]物流运输 | Luvwgyx 的博客</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -245,7 +245,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/02/BZOJ3675-Apio2014-序列分割/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/03/BZOJ1003-ZJOI2006-物流运输/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Luvwgyx">
@@ -257,7 +257,7 @@
       <meta itemprop="name" content="Luvwgyx 的博客">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">[BZOJ3675][Apio2014]序列分割
+        <h1 class="post-title" itemprop="name headline">[BZOJ1003][ZJOI2006]物流运输
 
           
         </h1>
@@ -273,7 +273,7 @@
                 
               
 
-              <time title="创建时间：2019-09-02 10:06:56 / 修改时间：10:34:59" itemprop="dateCreated datePublished" datetime="2019-09-02T10:06:56+08:00">2019-09-02</time>
+              <time title="创建时间：2019-09-03 12:05:57 / 修改时间：12:08:30" itemprop="dateCreated datePublished" datetime="2019-09-03T12:05:57+08:00">2019-09-03</time>
             </span>
           
             
@@ -314,29 +314,15 @@
 
       
         <h1 id="题目链接">题目链接</h1>
-<p><a href="https://www.lydsy.com/JudgeOnline/problem.php?id=3675" target="_blank" rel="noopener">BZOJ</a></p>
-<p><a href="https://www.luogu.org/problem/P3648" target="_blank" rel="noopener">洛谷</a></p>
+<p><a href="https://www.lydsy.com/JudgeOnline/problem.php?id=1003" target="_blank" rel="noopener">BZOJ</a></p>
+<p><a href="https://www.luogu.org/problem/P1772" target="_blank" rel="noopener">洛谷</a></p>
 <a id="more"></a>
 <h1 id="解题思路">解题思路</h1>
-<p>首先考虑分割顺序对于答案的影响。</p>
-<p>设当前的序列为<span class="math inline">\(a~b~c~d\)</span>，我们考虑从前往后分割与从后往前分割，比较最后的答案：</p>
-<ul>
-<li><span class="math inline">\(a(b+c+d)+b(c+d)+cd=ab+ac+ad+bc+bd+cd\)</span></li>
-<li><span class="math inline">\(d(a+b+c)+c(a+b)+ab=ad+bd+cd+ac+bc+ab\)</span></li>
-</ul>
-<p>比较一下，发现答案是相同的，推广一下可以得知分割的先后顺序对答案是没有影响的。</p>
-<p>我们设<span class="math inline">\(f_{i,j}\)</span>表示前<span class="math inline">\(i\)</span>个数分割了<span class="math inline">\(j\)</span>次能获得的最大的得分，那么就有如下转移（其中<span class="math inline">\(sum_x\)</span>表示第<span class="math inline">\(x\)</span>个位置的前缀和）： <span class="math display">\[
-f_{i,j}=\max_{0&lt;k&lt;j}\{f_{k,j-1}+sum_k\times(sum_i-sum_k)\}
-\]</span> 为什么当前转移的贡献是<span class="math inline">\(sum_k \times (sum_j-sum_k)\)</span>呢？因为顺序对答案并不造成影响，所以当前这个位置最大的贡献应该是第<span class="math inline">\(k\)</span>个位置被第一个切割所产生的贡献的最大值。</p>
-<p>我们发现转移只与上一维相关，所以我们可以滚动数组优化。我们记<span class="math inline">\(f_{i,j}\)</span>为<span class="math inline">\(F_i\)</span>，<span class="math inline">\(f_{k,j-1}\)</span>为<span class="math inline">\(G_k\)</span>，那么方程变为： <span class="math display">\[
-F_i=\max_{0&lt;k&lt;j}\{G_k+sum_k\times(sum_i-sum_k)\}
-\]</span> 考虑斜率优化，我们任取<span class="math inline">\(i\)</span>之前的两个位置<span class="math inline">\(x\)</span>和<span class="math inline">\(y\)</span>且满足<span class="math inline">\(x&lt;y\)</span>并且取<span class="math inline">\(y\)</span>较之取<span class="math inline">\(x\)</span>答案更优，那么： <span class="math display">\[
-G_y+sum_y\times(sum_i-sum_y) \geqslant G_x+sum_x \times (sum_i-sum_x)
-\]</span> 变换一下形式可得； <span class="math display">\[
-\frac{(g_y-sum_y^2)-(g_x-sum_x^2)}{sum_x-sum_y} \geqslant sum_i
-\]</span> 因此我们维护一下下凸壳就可以了。</p>
+<p>设<span class="math inline">\(f_i\)</span>表示到第<span class="math inline">\(i\)</span>天，最小的总成本是多少，那么转移也就很简单了： <span class="math display">\[
+f_i=f_j+dis \times (i-j+1)+K
+\]</span> 其中<span class="math inline">\(dis\)</span>为<span class="math inline">\(1\)</span>到<span class="math inline">\(m\)</span>的最短路。</p>
 <h1 id="参考代码">参考代码</h1>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*Program from Luvwgyx*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cmath&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> sqr(x) ((x)*(x))</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> int long long</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> write(x) printf(<span class="meta-string">"%lld\n"</span>,x)</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> inf=<span class="number">1e18</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">1e5</span>+<span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxm=<span class="number">2e2</span>+<span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> n,K,a[maxn],f[maxn],g[maxn],sum[maxn],q[maxn],pre[maxn][maxm];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x=<span class="number">0</span>,f=<span class="number">1</span>;<span class="keyword">char</span> ch=getchar();</span><br><span class="line">    <span class="keyword">while</span>(ch&lt;<span class="string">'0'</span>||ch&gt;<span class="string">'9'</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">'-'</span>)f=<span class="number">-1</span>;ch=getchar();&#125;</span><br><span class="line">    <span class="keyword">while</span>(ch&gt;=<span class="string">'0'</span>&amp;&amp;ch&lt;=<span class="string">'9'</span>)&#123;x=x*<span class="number">10</span>+ch-<span class="string">'0'</span>;ch=getchar();&#125;</span><br><span class="line">    <span class="keyword">return</span> x*f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">double</span> <span class="title">calc</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(sum[x]==sum[y])<span class="keyword">return</span> -inf;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.0</span>*((g[x]-sqr(sum[x]))-(g[y]-sqr(sum[y])))/(sum[y]-sum[x]);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    n=read();K=read();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)a[i]=read(),sum[i]=sum[i<span class="number">-1</span>]+a[i];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>;j&lt;=K;j++)&#123;</span><br><span class="line">        <span class="keyword">int</span> l=<span class="number">1</span>,r=<span class="number">0</span>;q[++r]=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">            <span class="keyword">while</span>(l&lt;r&amp;&amp;calc(q[l],q[l+<span class="number">1</span>])&lt;=sum[i])l++;</span><br><span class="line">            f[i]=g[q[l]]+sum[q[l]]*(sum[i]-sum[q[l]]);pre[i][j]=q[l];</span><br><span class="line">            <span class="keyword">while</span>(l&lt;r&amp;&amp;calc(q[r<span class="number">-1</span>],q[r])&gt;=calc(q[r],i))r--;q[++r]=i;</span><br><span class="line">        &#125;<span class="built_in">memcpy</span>(g,f,<span class="keyword">sizeof</span>(f));</span><br><span class="line">    &#125;write(f[n]);<span class="keyword">int</span> pos=n;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=K;i&gt;=<span class="number">1</span>;i--)pos=pre[pos][i],<span class="built_in">printf</span>(<span class="string">"%lld "</span>,pos);<span class="built_in">puts</span>(<span class="string">""</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*Program from Luvwgyx*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> fir first</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> sec second</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pi pair<span class="meta-string">&lt;int ,int &gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mp(x,y) make_pair(x,y)</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> inf=<span class="number">1e9</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">1e2</span>+<span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxm=<span class="number">1e4</span>+<span class="number">10</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span>&#123;</span><span class="keyword">int</span> to,nxt,w;&#125;e[maxm&lt;&lt;<span class="number">1</span>];</span><br><span class="line"><span class="keyword">int</span> n,m,K,E,tot,f[maxn],use[maxn],dis[maxn],head[maxn],fas[maxn][maxn];</span><br><span class="line"><span class="keyword">bool</span> vis[maxn];priority_queue&lt;pi &gt;q;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x=<span class="number">0</span>,f=<span class="number">1</span>;<span class="keyword">char</span> ch=getchar();</span><br><span class="line">    <span class="keyword">while</span>(ch&lt;<span class="string">'0'</span>||ch&gt;<span class="string">'9'</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">'-'</span>)f=<span class="number">-1</span>;ch=getchar();&#125;</span><br><span class="line">    <span class="keyword">while</span>(ch&gt;=<span class="string">'0'</span>&amp;&amp;ch&lt;=<span class="string">'9'</span>)&#123;x=x*<span class="number">10</span>+ch-<span class="string">'0'</span>;ch=getchar();&#125;</span><br><span class="line">    <span class="keyword">return</span> x*f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x&lt;<span class="number">0</span>)<span class="built_in">putchar</span>(<span class="string">'-'</span>),x=-x;</span><br><span class="line">    <span class="keyword">if</span>(x&gt;<span class="number">9</span>)print(x/<span class="number">10</span>);</span><br><span class="line">    <span class="built_in">putchar</span>(x%<span class="number">10</span>+<span class="string">'0'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">write</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;print(x);<span class="built_in">puts</span>(<span class="string">""</span>);&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> u,<span class="keyword">int</span> v,<span class="keyword">int</span> w)</span></span>&#123;e[++tot].to=v;e[tot].w=w;e[tot].nxt=head[u];head[u]=tot;&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dijkstra</span><span class="params">(<span class="keyword">int</span> S)</span></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(vis,<span class="number">0</span>,<span class="keyword">sizeof</span>(vis));</span><br><span class="line">    <span class="built_in">memset</span>(dis,<span class="number">63</span>,<span class="keyword">sizeof</span>(dis));</span><br><span class="line">    dis[S]=<span class="number">0</span>;q.push(mp(<span class="number">0</span>,S));</span><br><span class="line">    <span class="keyword">while</span>(q.size())&#123;</span><br><span class="line">        <span class="keyword">int</span> x=q.top().sec;q.pop();</span><br><span class="line">        <span class="keyword">if</span>(vis[x])<span class="keyword">continue</span>;vis[x]=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=head[x],v=e[i].to;i;i=e[i].nxt,v=e[i].to)</span><br><span class="line">            <span class="keyword">if</span>(dis[v]&gt;dis[x]+e[i].w&amp;&amp;!use[v])&#123;</span><br><span class="line">                dis[v]=dis[x]+e[i].w;</span><br><span class="line">                q.push(mp(-dis[v],v));</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    n=read();m=read();K=read();E=read();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=E;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> u=read(),v=read(),w=read();</span><br><span class="line">        add(u,v,w);add(v,u,w);</span><br><span class="line">    &#125;<span class="keyword">int</span> Q=read();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=Q;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> x=read(),l=read(),r=read();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=l;j&lt;=r;j++)fas[j][x]=<span class="number">1</span>;</span><br><span class="line">    &#125;<span class="built_in">memset</span>(f,<span class="number">63</span>,<span class="keyword">sizeof</span>(f));f[<span class="number">0</span>]=-K;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        <span class="built_in">memset</span>(use,<span class="number">0</span>,<span class="keyword">sizeof</span>(use));</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=i;j&gt;=<span class="number">1</span>;j--)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">1</span>;k&lt;=m;k++)<span class="keyword">if</span>(fas[j][k])use[k]=<span class="number">1</span>;</span><br><span class="line">            dijkstra(<span class="number">1</span>);<span class="keyword">int</span> ret=dis[m];</span><br><span class="line">            <span class="keyword">if</span>(ret&gt;inf)<span class="keyword">break</span>;</span><br><span class="line">            f[i]=min(f[i],f[j<span class="number">-1</span>]+(i-j+<span class="number">1</span>)*ret+K);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;write(f[n]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -352,7 +338,9 @@ G_y+sum_y\times(sum_i-sum_y) \geqslant G_x+sum_x \times (sum_i-sum_x)
           
           <div class="post-tags">
             
-              <a href="/tags/斜率优化DP/" rel="tag"># 斜率优化DP</a>
+              <a href="/tags/DP/" rel="tag"># DP</a>
+            
+              <a href="/tags/最短路/" rel="tag"># 最短路</a>
             
           </div>
         
@@ -362,8 +350,8 @@ G_y+sum_y\times(sum_i-sum_y) \geqslant G_x+sum_x \times (sum_i-sum_x)
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/09/01/Educational-Codeforces-Round-66/" rel="next" title="Educational Codeforces Round 66 ">
-                  <i class="fa fa-chevron-left"></i> Educational Codeforces Round 66 
+                <a href="/2019/09/03/BZOJ1084-SCOI2005-最大子矩阵/" rel="next" title="[BZOJ1084][SCOI2005]最大子矩阵">
+                  <i class="fa fa-chevron-left"></i> [BZOJ1084][SCOI2005]最大子矩阵
                 </a>
               
             </div>
@@ -371,10 +359,6 @@ G_y+sum_y\times(sum_i-sum_y) \geqslant G_x+sum_x \times (sum_i-sum_x)
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2019/09/02/BZOJ2326-HNOI2011-数学作业/" rel="prev" title="[BZOJ2326][HNOI2011]数学作业">
-                  [BZOJ2326][HNOI2011]数学作业 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -721,7 +705,7 @@ G_y+sum_y\times(sum_i-sum_y) \geqslant G_x+sum_x \times (sum_i-sum_x)
       repo: 'https://luvwgyx.github.io/',
       owner: 'Luvwgyx',
       admin: ['Luvwgyx'],
-      id: '868e19f0523e323e84c6a92198b31628',
+      id: 'caaa12fd3dfa7f2953ebe62c9a331870',
         language: 'zh-CN',
       
       distractionFreeMode: 'true'
