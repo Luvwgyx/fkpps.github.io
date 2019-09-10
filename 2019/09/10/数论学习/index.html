@@ -55,19 +55,19 @@
   };
 </script>
 
-  <meta name="description" content="题目链接 BZOJ 洛谷">
-<meta name="keywords" content="DP,最短路">
+  <meta name="description" content="扩展欧几里得形如\(ax+by=\gcd(a,b)\)，可以用扩展欧几里得求得整数解。设\(ax_1+by_1=\gcd(a,b)\)，且我们已求得\(bx_2+(a\%b)y_2=\gcd(a,b)\)的解\(x_2,y_2\)，考虑如何推出\(x_1,y_1\)。 \[ \because a\%b=a- b\lfloor \frac{a}{b} \rfloor\\ \therefore ax_">
+<meta name="keywords" content="学习笔记">
 <meta property="og:type" content="article">
-<meta property="og:title" content="[BZOJ1003][ZJOI2006]物流运输">
-<meta property="og:url" content="http://yoursite.com/2019/09/03/BZOJ1003-ZJOI2006-物流运输/index.html">
+<meta property="og:title" content="数论学习">
+<meta property="og:url" content="http://yoursite.com/2019/09/10/数论学习/index.html">
 <meta property="og:site_name" content="Luvwgyx 的博客">
-<meta property="og:description" content="题目链接 BZOJ 洛谷">
+<meta property="og:description" content="扩展欧几里得形如\(ax+by=\gcd(a,b)\)，可以用扩展欧几里得求得整数解。设\(ax_1+by_1=\gcd(a,b)\)，且我们已求得\(bx_2+(a\%b)y_2=\gcd(a,b)\)的解\(x_2,y_2\)，考虑如何推出\(x_1,y_1\)。 \[ \because a\%b=a- b\lfloor \frac{a}{b} \rfloor\\ \therefore ax_">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-03T04:08:30.788Z">
+<meta property="og:updated_time" content="2019-09-10T03:05:23.190Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="[BZOJ1003][ZJOI2006]物流运输">
-<meta name="twitter:description" content="题目链接 BZOJ 洛谷">
-  <link rel="canonical" href="http://yoursite.com/2019/09/03/BZOJ1003-ZJOI2006-物流运输/">
+<meta name="twitter:title" content="数论学习">
+<meta name="twitter:description" content="扩展欧几里得形如\(ax+by=\gcd(a,b)\)，可以用扩展欧几里得求得整数解。设\(ax_1+by_1=\gcd(a,b)\)，且我们已求得\(bx_2+(a\%b)y_2=\gcd(a,b)\)的解\(x_2,y_2\)，考虑如何推出\(x_1,y_1\)。 \[ \because a\%b=a- b\lfloor \frac{a}{b} \rfloor\\ \therefore ax_">
+  <link rel="canonical" href="http://yoursite.com/2019/09/10/数论学习/">
 
 
 <script id="page-configurations">
@@ -81,7 +81,7 @@
   };
 </script>
 
-  <title>[BZOJ1003][ZJOI2006]物流运输 | Luvwgyx 的博客</title>
+  <title>数论学习 | Luvwgyx 的博客</title>
   <meta name="generator" content="Hexo 3.9.0">
   
 
@@ -245,7 +245,7 @@
   
   
   <div class="post-block post">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/03/BZOJ1003-ZJOI2006-物流运输/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/10/数论学习/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Luvwgyx">
@@ -257,7 +257,7 @@
       <meta itemprop="name" content="Luvwgyx 的博客">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">[BZOJ1003][ZJOI2006]物流运输
+        <h1 class="post-title" itemprop="name headline">数论学习
 
           
         </h1>
@@ -273,7 +273,7 @@
                 
               
 
-              <time title="创建时间：2019-09-03 12:05:57 / 修改时间：12:08:30" itemprop="dateCreated datePublished" datetime="2019-09-03T12:05:57+08:00">2019-09-03</time>
+              <time title="创建时间：2019-09-10 10:07:05 / 修改时间：11:05:23" itemprop="dateCreated datePublished" datetime="2019-09-10T10:07:05+08:00">2019-09-10</time>
             </span>
           
             
@@ -286,7 +286,7 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/题解/" itemprop="url" rel="index"><span itemprop="name">题解</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/总结/" itemprop="url" rel="index"><span itemprop="name">总结</span></a></span>
 
                 
                 
@@ -313,16 +313,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="题目链接">题目链接</h1>
-<p><a href="https://www.lydsy.com/JudgeOnline/problem.php?id=1003" target="_blank" rel="noopener">BZOJ</a></p>
-<p><a href="https://www.luogu.org/problem/P1772" target="_blank" rel="noopener">洛谷</a></p>
-<a id="more"></a>
-<h1 id="解题思路">解题思路</h1>
-<p>设<span class="math inline">\(f_i\)</span>表示到第<span class="math inline">\(i\)</span>天，最小的总成本是多少，那么转移也就很简单了： <span class="math display">\[
-f_i=f_j+dis \times (i-j+1)+K
-\]</span> 其中<span class="math inline">\(dis\)</span>为<span class="math inline">\(1\)</span>到<span class="math inline">\(m\)</span>的最短路。</p>
-<h1 id="参考代码">参考代码</h1>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*Program from Luvwgyx*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;queue&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> fir first</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> sec second</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> pi pair<span class="meta-string">&lt;int ,int &gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> mp(x,y) make_pair(x,y)</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> inf=<span class="number">1e9</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">1e2</span>+<span class="number">10</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxm=<span class="number">1e4</span>+<span class="number">10</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">node</span>&#123;</span><span class="keyword">int</span> to,nxt,w;&#125;e[maxm&lt;&lt;<span class="number">1</span>];</span><br><span class="line"><span class="keyword">int</span> n,m,K,E,tot,f[maxn],use[maxn],dis[maxn],head[maxn],fas[maxn][maxn];</span><br><span class="line"><span class="keyword">bool</span> vis[maxn];priority_queue&lt;pi &gt;q;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x=<span class="number">0</span>,f=<span class="number">1</span>;<span class="keyword">char</span> ch=getchar();</span><br><span class="line">    <span class="keyword">while</span>(ch&lt;<span class="string">'0'</span>||ch&gt;<span class="string">'9'</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">'-'</span>)f=<span class="number">-1</span>;ch=getchar();&#125;</span><br><span class="line">    <span class="keyword">while</span>(ch&gt;=<span class="string">'0'</span>&amp;&amp;ch&lt;=<span class="string">'9'</span>)&#123;x=x*<span class="number">10</span>+ch-<span class="string">'0'</span>;ch=getchar();&#125;</span><br><span class="line">    <span class="keyword">return</span> x*f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x&lt;<span class="number">0</span>)<span class="built_in">putchar</span>(<span class="string">'-'</span>),x=-x;</span><br><span class="line">    <span class="keyword">if</span>(x&gt;<span class="number">9</span>)print(x/<span class="number">10</span>);</span><br><span class="line">    <span class="built_in">putchar</span>(x%<span class="number">10</span>+<span class="string">'0'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">write</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;print(x);<span class="built_in">puts</span>(<span class="string">""</span>);&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> u,<span class="keyword">int</span> v,<span class="keyword">int</span> w)</span></span>&#123;e[++tot].to=v;e[tot].w=w;e[tot].nxt=head[u];head[u]=tot;&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">dijkstra</span><span class="params">(<span class="keyword">int</span> S)</span></span>&#123;</span><br><span class="line">    <span class="built_in">memset</span>(vis,<span class="number">0</span>,<span class="keyword">sizeof</span>(vis));</span><br><span class="line">    <span class="built_in">memset</span>(dis,<span class="number">63</span>,<span class="keyword">sizeof</span>(dis));</span><br><span class="line">    dis[S]=<span class="number">0</span>;q.push(mp(<span class="number">0</span>,S));</span><br><span class="line">    <span class="keyword">while</span>(q.size())&#123;</span><br><span class="line">        <span class="keyword">int</span> x=q.top().sec;q.pop();</span><br><span class="line">        <span class="keyword">if</span>(vis[x])<span class="keyword">continue</span>;vis[x]=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=head[x],v=e[i].to;i;i=e[i].nxt,v=e[i].to)</span><br><span class="line">            <span class="keyword">if</span>(dis[v]&gt;dis[x]+e[i].w&amp;&amp;!use[v])&#123;</span><br><span class="line">                dis[v]=dis[x]+e[i].w;</span><br><span class="line">                q.push(mp(-dis[v],v));</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    n=read();m=read();K=read();E=read();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=E;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> u=read(),v=read(),w=read();</span><br><span class="line">        add(u,v,w);add(v,u,w);</span><br><span class="line">    &#125;<span class="keyword">int</span> Q=read();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=Q;i++)&#123;</span><br><span class="line">        <span class="keyword">int</span> x=read(),l=read(),r=read();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=l;j&lt;=r;j++)fas[j][x]=<span class="number">1</span>;</span><br><span class="line">    &#125;<span class="built_in">memset</span>(f,<span class="number">63</span>,<span class="keyword">sizeof</span>(f));f[<span class="number">0</span>]=-K;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)&#123;</span><br><span class="line">        <span class="built_in">memset</span>(use,<span class="number">0</span>,<span class="keyword">sizeof</span>(use));</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=i;j&gt;=<span class="number">1</span>;j--)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">1</span>;k&lt;=m;k++)<span class="keyword">if</span>(fas[j][k])use[k]=<span class="number">1</span>;</span><br><span class="line">            dijkstra(<span class="number">1</span>);<span class="keyword">int</span> ret=dis[m];</span><br><span class="line">            <span class="keyword">if</span>(ret&gt;inf)<span class="keyword">break</span>;</span><br><span class="line">            f[i]=min(f[i],f[j<span class="number">-1</span>]+(i-j+<span class="number">1</span>)*ret+K);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;write(f[n]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        <h1 id="扩展欧几里得">扩展欧几里得</h1><p>形如<span class="math inline">\(ax+by=\gcd(a,b)\)</span>，可以用扩展欧几里得求得整数解。</p><p>设<span class="math inline">\(ax_1+by_1=\gcd(a,b)\)</span>，且我们已求得<span class="math inline">\(bx_2+(a\%b)y_2=\gcd(a,b)\)</span>的解<span class="math inline">\(x_2,y_2\)</span>，考虑如何推出<span class="math inline">\(x_1,y_1\)</span>。 <span class="math display">\[
+\because a\%b=a- b\lfloor \frac{a}{b} \rfloor\\
+\therefore ax_1+by_1=bx_2+(a- b\lfloor \frac{a}{b} \rfloor)y_2\\
+\begin{align}
+ax_1+by_1 &amp;= bx_2+ay_2-b\lfloor \frac{a}{b} \rfloor y_2\\
+&amp;=ay_2+b(x_2-\lfloor \frac{a}{b} \rfloor y_2)\\
+\end{align}
+\\
+\therefore x_1=y_2,y_1=x_2-\lfloor \frac{a}{b} \rfloor y_2
+\]</span></p><a id="more"></a>
+
+
+<h1 id="费马小定理">费马小定理</h1>
+<p>若<span class="math inline">\(p\)</span>为素数，<span class="math inline">\(\gcd(a,p)=1\)</span>，则<span class="math inline">\(a^{p-1}\equiv 1({\rm{mod}}~p)\)</span>。</p>
+<h1 id="欧拉函数">欧拉函数</h1>
+<p>欧拉函数<span class="math inline">\(\varphi(n)\)</span>表示小于等于<span class="math inline">\(n\)</span>且和<span class="math inline">\(n\)</span>互质的数的个数。</p>
+<p><span class="math inline">\(\varphi(1)=1\)</span>，<span class="math inline">\(n\)</span>为质数时<span class="math inline">\(\varphi(n)=n-1\)</span>。</p>
+<p>根据<a href="%5Bhttps://zh.wikipedia.org/wiki/%E7%AE%97%E6%9C%AF%E5%9F%BA%E6%9C%AC%E5%AE%9A%E7%90%86%5D(https://zh.wikipedia.org/wiki/算术基本定理)">唯一分解定理</a>，我们可以把一个整数唯一地分解为质数幂次的乘积，设<span class="math inline">\(n=p_1^{k_1}p_2^{k_2}...p_s^{k_s}\)</span>，其中<span class="math inline">\(p_i\)</span>是质数，那么<span class="math inline">\(\varphi(n)=n\times\prod_{i=1}^s\frac{p_i-1}{p_i}\)</span>。</p>
+<h2 id="性质">性质</h2>
+<ul>
+<li><p>积性函数。即若<span class="math inline">\(\gcd(a,b)=1\)</span>，则<span class="math inline">\(\varphi(a\times b)=\varphi(a)\times \varphi(b)\)</span>。</p></li>
+<li><p><span class="math inline">\(n=\sum_{d|n}\varphi(d)\)</span>，可以利用莫比乌斯反演的相关知识得出。</p>
+<p>也可以这样理解：若<span class="math inline">\(\gcd(n,k)=d\)</span>，那么<span class="math inline">\(\gcd(\frac{n}{d},\frac{k}{d})=1\)</span>，其中<span class="math inline">\(k&lt;n\)</span>。</p>
+<p>设<span class="math inline">\(f(x)\)</span>表示<span class="math inline">\(\gcd(n,k)=x\)</span>的数的个数，那么<span class="math inline">\(n=\sum_{i=1}^nf(i)\)</span>，由于<span class="math inline">\(f(x)=\varphi(\frac{n}{x})\)</span>，则<span class="math inline">\(n=\sum_{d|n}\varphi(\frac{n}{d})\)</span>，由于<span class="math inline">\(d\)</span>和<span class="math inline">\(\varphi(\frac{n}{d})\)</span>具有对称性，所以<span class="math inline">\(n=\sum_{d|n}\varphi(d)\)</span>。</p></li>
+<li><p>若<span class="math inline">\(n=p^k\)</span>，其中<span class="math inline">\(p\)</span>为质数，那么<span class="math inline">\(\varphi(n)=p^k-p^{k-1}\)</span>。</p></li>
+</ul>
+<h2 id="欧拉定理">欧拉定理</h2>
+<p>若<span class="math inline">\(\gcd(a,m)=1\)</span>，则<span class="math inline">\(a^{\varphi(m)} \equiv 1({\rm{mod}}~m)\)</span>。</p>
+<p>证明：</p>
+<p>简化剩余系：所有<span class="math inline">\(\gcd(n,m)=1,1\leqslant n \leqslant m\)</span>的<span class="math inline">\(n\)</span>构成了<span class="math inline">\(m\)</span>的简化剩余系，简称缩系。</p>
+<p>设<span class="math inline">\(r_1,r_2,...,r_{\varphi(m)}\)</span>为模<span class="math inline">\(m\)</span>意义下的缩系，那么<span class="math inline">\(ar_1,ar_2,...,ar_{\varphi(m)}\)</span>同为模<span class="math inline">\(m\)</span>意义下 的缩系。 <span class="math display">\[
+r_1r_2\cdots r_{\varphi(m)}=ar_1\cdot ar_2 \cdots ar_{\varphi(m)}=a^{\varphi(m)}r_1r_2\cdots r_{\varphi(m)}\\
+\therefore \varphi(m) \equiv 1({\rm{mod}}~m)
+\]</span> 当<span class="math inline">\(m\)</span>为素数时，由于<span class="math inline">\(\varphi(m)=m-1\)</span>，代入欧拉定理即可得费马小定理。</p>
 
     </div>
 
@@ -338,9 +362,7 @@ f_i=f_j+dis \times (i-j+1)+K
           
           <div class="post-tags">
             
-              <a href="/tags/DP/" rel="tag"># DP</a>
-            
-              <a href="/tags/最短路/" rel="tag"># 最短路</a>
+              <a href="/tags/学习笔记/" rel="tag"># 学习笔记</a>
             
           </div>
         
@@ -350,8 +372,8 @@ f_i=f_j+dis \times (i-j+1)+K
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2019/09/03/BZOJ1084-SCOI2005-最大子矩阵/" rel="next" title="[BZOJ1084][SCOI2005]最大子矩阵">
-                  <i class="fa fa-chevron-left"></i> [BZOJ1084][SCOI2005]最大子矩阵
+                <a href="/2019/09/05/Educational-Codeforces-Round-65/" rel="next" title="Educational Codeforces Round 65">
+                  <i class="fa fa-chevron-left"></i> Educational Codeforces Round 65
                 </a>
               
             </div>
@@ -359,10 +381,6 @@ f_i=f_j+dis \times (i-j+1)+K
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2019/09/05/Educational-Codeforces-Round-65/" rel="prev" title="Educational Codeforces Round 65">
-                  Educational Codeforces Round 65 <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -414,7 +432,7 @@ f_i=f_j+dis \times (i-j+1)+K
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题目链接"><span class="nav-number">1.</span> <span class="nav-text">题目链接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解题思路"><span class="nav-number">2.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考代码"><span class="nav-number">3.</span> <span class="nav-text">参考代码</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#扩展欧几里得"><span class="nav-number">1.</span> <span class="nav-text">扩展欧几里得</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#费马小定理"><span class="nav-number">2.</span> <span class="nav-text">费马小定理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#欧拉函数"><span class="nav-number">3.</span> <span class="nav-text">欧拉函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#性质"><span class="nav-number">3.1.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#欧拉定理"><span class="nav-number">3.2.</span> <span class="nav-text">欧拉定理</span></a></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -717,7 +735,7 @@ f_i=f_j+dis \times (i-j+1)+K
       repo: 'Luvwgyx.github.io',
       owner: 'Luvwgyx',
       admin: ['Luvwgyx'],
-      id: 'caaa12fd3dfa7f2953ebe62c9a331870',
+      id: '7406a79fef41bb3cd01411726e73fa6e',
         language: 'zh-CN',
       
       distractionFreeMode: 'true'
