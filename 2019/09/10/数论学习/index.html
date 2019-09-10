@@ -55,18 +55,18 @@
   };
 </script>
 
-  <meta name="description" content="扩展欧几里得形如\(ax+by=\gcd(a,b)\)，可以用扩展欧几里得求得整数解。设\(ax_1+by_1=\gcd(a,b)\)，且我们已求得\(bx_2+(a\%b)y_2=\gcd(a,b)\)的解\(x_2,y_2\)，考虑如何推出\(x_1,y_1\)。 \[ \because a\%b=a- b\lfloor \frac{a}{b} \rfloor\\ \therefore ax_">
+  <meta name="description" content="扩展欧几里得 形如\(ax+by=\gcd(a,b)\)，可以用扩展欧几里得求得整数解。 设\(ax_1+by_1=\gcd(a,b)\)，且我们已求得\(bx_2+(a\%b)y_2=\gcd(a,b)\)的解\(x_2,y_2\)，考虑如何推出\(x_1,y_1\)。">
 <meta name="keywords" content="学习笔记">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数论学习">
 <meta property="og:url" content="http://yoursite.com/2019/09/10/数论学习/index.html">
 <meta property="og:site_name" content="Luvwgyx 的博客">
-<meta property="og:description" content="扩展欧几里得形如\(ax+by=\gcd(a,b)\)，可以用扩展欧几里得求得整数解。设\(ax_1+by_1=\gcd(a,b)\)，且我们已求得\(bx_2+(a\%b)y_2=\gcd(a,b)\)的解\(x_2,y_2\)，考虑如何推出\(x_1,y_1\)。 \[ \because a\%b=a- b\lfloor \frac{a}{b} \rfloor\\ \therefore ax_">
+<meta property="og:description" content="扩展欧几里得 形如\(ax+by=\gcd(a,b)\)，可以用扩展欧几里得求得整数解。 设\(ax_1+by_1=\gcd(a,b)\)，且我们已求得\(bx_2+(a\%b)y_2=\gcd(a,b)\)的解\(x_2,y_2\)，考虑如何推出\(x_1,y_1\)。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-10T03:15:43.781Z">
+<meta property="og:updated_time" content="2019-09-10T03:24:26.525Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数论学习">
-<meta name="twitter:description" content="扩展欧几里得形如\(ax+by=\gcd(a,b)\)，可以用扩展欧几里得求得整数解。设\(ax_1+by_1=\gcd(a,b)\)，且我们已求得\(bx_2+(a\%b)y_2=\gcd(a,b)\)的解\(x_2,y_2\)，考虑如何推出\(x_1,y_1\)。 \[ \because a\%b=a- b\lfloor \frac{a}{b} \rfloor\\ \therefore ax_">
+<meta name="twitter:description" content="扩展欧几里得 形如\(ax+by=\gcd(a,b)\)，可以用扩展欧几里得求得整数解。 设\(ax_1+by_1=\gcd(a,b)\)，且我们已求得\(bx_2+(a\%b)y_2=\gcd(a,b)\)的解\(x_2,y_2\)，考虑如何推出\(x_1,y_1\)。">
   <link rel="canonical" href="http://yoursite.com/2019/09/10/数论学习/">
 
 
@@ -273,7 +273,7 @@
                 
               
 
-              <time title="创建时间：2019-09-10 10:07:05 / 修改时间：11:15:43" itemprop="dateCreated datePublished" datetime="2019-09-10T10:07:05+08:00">2019-09-10</time>
+              <time title="创建时间：2019-09-10 10:07:05 / 修改时间：11:24:26" itemprop="dateCreated datePublished" datetime="2019-09-10T10:07:05+08:00">2019-09-10</time>
             </span>
           
             
@@ -313,7 +313,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="扩展欧几里得">扩展欧几里得</h1><p>形如<span class="math inline">\(ax+by=\gcd(a,b)\)</span>，可以用扩展欧几里得求得整数解。</p><p>设<span class="math inline">\(ax_1+by_1=\gcd(a,b)\)</span>，且我们已求得<span class="math inline">\(bx_2+(a\%b)y_2=\gcd(a,b)\)</span>的解<span class="math inline">\(x_2,y_2\)</span>，考虑如何推出<span class="math inline">\(x_1,y_1\)</span>。 <span class="math display">\[
+        <h1 id="扩展欧几里得">扩展欧几里得</h1>
+<p>形如<span class="math inline">\(ax+by=\gcd(a,b)\)</span>，可以用扩展欧几里得求得整数解。</p>
+<p>设<span class="math inline">\(ax_1+by_1=\gcd(a,b)\)</span>，且我们已求得<span class="math inline">\(bx_2+(a\%b)y_2=\gcd(a,b)\)</span>的解<span class="math inline">\(x_2,y_2\)</span>，考虑如何推出<span class="math inline">\(x_1,y_1\)</span>。</p>
+<a id="more"></a>
+<p><span class="math display">\[
 \because a\%b=a- b\lfloor \frac{a}{b} \rfloor\\
 \therefore ax_1+by_1=bx_2+(a- b\lfloor \frac{a}{b} \rfloor)y_2\\
 \begin{align}
@@ -322,9 +326,7 @@ ax_1+by_1 &amp;= bx_2+ay_2-b\lfloor \frac{a}{b} \rfloor y_2\\
 \end{align}
 \\
 \therefore x_1=y_2,y_1=x_2-\lfloor \frac{a}{b} \rfloor y_2
-\]</span></p><a id="more"></a>
-
-
+\]</span></p>
 <h1 id="费马小定理">费马小定理</h1>
 <p>若<span class="math inline">\(p\)</span>为素数，<span class="math inline">\(\gcd(a,p)=1\)</span>，则<span class="math inline">\(a^{p-1}\equiv 1({\rm{mod}}~p)\)</span>。</p>
 <h1 id="欧拉函数">欧拉函数</h1>
