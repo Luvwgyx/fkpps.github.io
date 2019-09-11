@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="Luvwgyx 的博客">
 <meta property="og:description" content="扩展欧几里得 形如\(ax+by=\gcd(a,b)\)，可以用扩展欧几里得求得整数解。 设\(ax_1+by_1=\gcd(a,b)\)，且我们已求得\(bx_2+(a\%b)y_2=\gcd(a,b)\)的解\(x_2,y_2\)，考虑如何推出\(x_1,y_1\)。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-11T11:17:12.023Z">
+<meta property="og:updated_time" content="2019-09-11T11:18:26.654Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数论学习">
 <meta name="twitter:description" content="扩展欧几里得 形如\(ax+by=\gcd(a,b)\)，可以用扩展欧几里得求得整数解。 设\(ax_1+by_1=\gcd(a,b)\)，且我们已求得\(bx_2+(a\%b)y_2=\gcd(a,b)\)的解\(x_2,y_2\)，考虑如何推出\(x_1,y_1\)。">
@@ -284,7 +284,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-11 19:17:12" itemprop="dateModified" datetime="2019-09-11T19:17:12+08:00">2019-09-11</time>
+                <time title="修改时间：2019-09-11 19:18:26" itemprop="dateModified" datetime="2019-09-11T19:18:26+08:00">2019-09-11</time>
               </span>
             
           
@@ -393,7 +393,7 @@ f(a,b,c,n) &amp;= \sum_{j=0}^{m-1} \sum_{i=0}^n [i &gt; \lfloor \frac{jc+c-b-1}{
 \]</span> 因此 <span class="math display">\[
 f(a,b,c,n)=
 \begin{cases}
-\lfloor\frac{a}{c} \rfloor n \times \frac{n(n+1)}{2}+\lfloor \frac{b}{c} \rfloor(n+1)+f(a~{\rm mod}~c,b~{\rm mod}~c,c,n) &amp; {a \geqslant c,b \geqslant c}\\
+\lfloor\frac{a}{c} \rfloor\frac{n(n+1)}{2}+\lfloor \frac{b}{c} \rfloor(n+1)+f(a~{\rm mod}~c,b~{\rm mod}~c,c,n) &amp; {a \geqslant c,b \geqslant c}\\
 n\lfloor\frac{an+b}{c}\rfloor -f(c,c-b-1,a,m-1) &amp; {a &lt; c,b &lt; c}\\
 \end{cases}
 \]</span> 很显然这是一个递归式，并且在<span class="math inline">\(a&lt;c,b&lt;c\)</span>的时候分子分母换了位置，又可以重复上述过程。先取模，再递归。这就是一个辗转相除的过程，这也是类欧几里德算法的得名。</p>
