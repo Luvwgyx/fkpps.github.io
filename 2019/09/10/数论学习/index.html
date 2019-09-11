@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="Luvwgyx 的博客">
 <meta property="og:description" content="扩展欧几里得 形如\(ax+by=\gcd(a,b)\)，可以用扩展欧几里得求得整数解。 设\(ax_1+by_1=\gcd(a,b)\)，且我们已求得\(bx_2+(a\%b)y_2=\gcd(a,b)\)的解\(x_2,y_2\)，考虑如何推出\(x_1,y_1\)。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-11T01:27:32.187Z">
+<meta property="og:updated_time" content="2019-09-11T03:27:39.636Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数论学习">
 <meta name="twitter:description" content="扩展欧几里得 形如\(ax+by=\gcd(a,b)\)，可以用扩展欧几里得求得整数解。 设\(ax_1+by_1=\gcd(a,b)\)，且我们已求得\(bx_2+(a\%b)y_2=\gcd(a,b)\)的解\(x_2,y_2\)，考虑如何推出\(x_1,y_1\)。">
@@ -284,7 +284,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-11 09:27:32" itemprop="dateModified" datetime="2019-09-11T09:27:32+08:00">2019-09-11</time>
+                <time title="修改时间：2019-09-11 11:27:39" itemprop="dateModified" datetime="2019-09-11T11:27:39+08:00">2019-09-11</time>
               </span>
             
           
@@ -358,6 +358,77 @@ r_1r_2\cdots r_{\varphi(m)}=ar_1\cdot ar_2 \cdots ar_{\varphi(m)}=a^{\varphi(m)}
 \therefore a^{\varphi(m)} \equiv 1({\rm{mod}}~m)
 \]</span> 当<span class="math inline">\(m\)</span>为素数时，由于<span class="math inline">\(\varphi(m)=m-1\)</span>，代入欧拉定理即可得费马小定理。</p>
 <h1 id="类欧几里得">类欧几里得</h1>
+<h2 id="引入">引入</h2>
+<p>设 <span class="math display">\[
+f(a,b,c,n)=\sum_{i=0}^n\lfloor \frac{ai+b}{c} \rfloor
+\]</span> 其中<span class="math inline">\(a,b,c,n\)</span>均为常数，考虑如何在<span class="math inline">\(O(\log n)\)</span>时间内求解答案。</p>
+<p>向下取整很容易想到数论分块，然后用在这里似乎不好做，但是我们也可以做一些优化：如果<span class="math inline">\(a \geqslant c,b\geqslant c\)</span>，我们考虑对式子进行取模处理： <span class="math display">\[
+\begin{align}
+f(a,b,c,n) &amp;= \sum_{i=0}^n\lfloor\frac{ai+b}{c}\rfloor\\
+&amp;=\sum_{i=0}^n\lfloor \frac{(\lfloor \frac{a}{c} \rfloor c +a~{\rm mod}~ c)i+(\lfloor \frac{b}{c} \rfloor c+ b~{\rm mod}~c)}{c} \rfloor\\
+&amp;=\lfloor\frac{a}{c} \rfloor n \times \frac{n(n+1)}{2}+\lfloor \frac{b}{c} \rfloor(n+1)+\sum_{i=0}^n\lfloor \frac{(a~{\rm mod}~c)i+b~{\rm mod}~c}{c} \rfloor\\
+&amp;=\lfloor\frac{a}{c} \rfloor n \times \frac{n(n+1)}{2}+\lfloor \frac{b}{c} \rfloor(n+1)+f(a~{\rm mod}~c,b~{\rm mod}~c,c,n)\\
+\end{align}
+\]</span></p>
+<p>那么现在问题就转化为如何求解<span class="math inline">\(a &lt; c,b&lt;c\)</span>情况下的<span class="math inline">\(f\)</span>函数值了。</p>
+<p>由于只有<span class="math inline">\(i\)</span>一个变量，所以只能考虑对<span class="math inline">\(i\)</span>进行一些操作。在推求和式子中有一个常见的技巧，就是条件与贡献的放缩与转化。具体地说，在原式中，<span class="math inline">\(0 \leqslant i \leqslant n\)</span>是条件，而<span class="math inline">\(\lfloor\frac{ai+b}{c}\rfloor\)</span>是对总和的贡献。我们要加速和式的计算都是将贡献合并计算，但是这个式子的贡献并不好合并计算，因此我们考虑将贡献和条件互相转化变成新形式的和式来计算贡献，我们直接把贡献变成条件： <span class="math display">\[
+\begin{align}
+f(a,b,c,n) &amp;= \sum_{i=0}^n\lfloor\frac{ai+b}{c}\rfloor\\
+&amp;=\sum_{i=0}^n\sum_{j=0}^{\lfloor\frac{ai+b}{c}\rfloor-1}1\\
+\end{align}
+\]</span> 现在我们多了一个变量<span class="math inline">\(j\)</span>，由于并不好计算<span class="math inline">\(i\)</span>的贡献，我们考虑计算<span class="math inline">\(j\)</span>的贡献。由于<span class="math inline">\(j\)</span>的贡献是受<span class="math inline">\(i\)</span>的限制的，而我们现在要单独计算<span class="math inline">\(j\)</span>的贡献，因此我们将<span class="math inline">\(i\)</span>和<span class="math inline">\(j\)</span>的求和式子交换，把<span class="math inline">\(j\)</span>放到贡献式子里，强制用<span class="math inline">\(n\)</span>限制<span class="math inline">\(j\)</span>的范围： <span class="math display">\[
+\begin{align}
+f(a,b,c,n) &amp;=\sum_{i=0}^n\sum_{j=0}^{\lfloor\frac{ai+b}{c}\rfloor-1}1\\
+&amp;=\sum_{j=0}^{\lfloor\frac{an+b}{c}\rfloor-1}\sum_{i=0}^n[j &lt; \lfloor\frac{ai+b}{c}\rfloor]
+\end{align}
+\]</span> 这样<span class="math inline">\(j\)</span>就不受<span class="math inline">\(i\)</span>的限制，而是与<span class="math inline">\(i\)</span>一样受<span class="math inline">\(n\)</span>的限制，我们再将贡献式变形变成与<span class="math inline">\(i\)</span>相关的式子： <span class="math display">\[
+j &lt; \lfloor\frac{ai+b}{c}\rfloor \Leftrightarrow j+1 \leqslant \lfloor\frac{ai+b}{c}\rfloor \Leftrightarrow j+1 \leqslant \frac{ai+b}{c}\\
+jc+c-b \leqslant ai \Leftrightarrow jc+c-b-1 &lt;ai \Leftrightarrow i &gt; \lfloor \frac{jc+c-b-1}{a} \rfloor\\
+\]</span> 设<span class="math inline">\(m= \lfloor\frac{an+b}{c}\rfloor\)</span>，那么式子就变为： <span class="math display">\[
+\begin{align}
+f(a,b,c,n) &amp;= \sum_{j=0}^{m-1} \sum_{i=0}^n [i &gt; \lfloor \frac{jc+c-b-1}{a} \rfloor]\\
+&amp;=\sum_{j=0}^{m-1} n - \lfloor \frac{jc+c-b-1}{a} \rfloor\\
+&amp;=nm-f(c,c-b-1,a,m-1)
+\end{align}
+\]</span> 因此 <span class="math display">\[
+f(a,b,c,n)=
+\begin{cases}
+\lfloor\frac{a}{c} \rfloor n \times \frac{n(n+1)}{2}+\lfloor \frac{b}{c} \rfloor(n+1)+f(a~{\rm mod}~c,b~{\rm mod}~c,c,n) &amp; {a \geqslant c,b \geqslant c}\\
+n\lfloor\frac{an+b}{c}\rfloor -f(c,c-b-1,a,m-1) &amp; {a &lt; c,b &lt; c}\\
+\end{cases}
+\]</span> 很显然这是一个递归式，并且在<span class="math inline">\(a&lt;c,b&lt;c\)</span>的时候分子分母换了位置，又可以重复上述过程。先取模，再递归。这就是一个辗转相除的过程，这也是类欧几里德算法的得名。</p>
+<p>时间复杂度为<span class="math inline">\(O(\log n)\)</span>。</p>
+<h2 id="扩展">扩展</h2>
+<p>现在我们得出了最基本的类欧几里得算法，我们考虑求解下面两个变式： <span class="math display">\[
+g(a,b,c,n)=\sum_{i=0}^n i\lfloor \frac{ai+b}{c} \rfloor\\
+h(a,b,c,n)=\sum_{i=0}^n\lfloor \frac{ai+b}{c} \rfloor^2
+\]</span></p>
+<h3 id="g函数的推导"><span class="math inline">\(g\)</span>函数的推导</h3>
+<p>同理，对于<span class="math inline">\(a \geqslant c,b \geqslant c\)</span>的情况，取模： <span class="math display">\[
+\begin{align}
+g(a,b,c,n) &amp;= \sum_{i=0}^n i \lfloor \frac{ai+b}{c} \rfloor\\
+&amp;= \sum_{i=0}^n i \lfloor \frac{(\lfloor \frac{a}{c} \rfloor c + a~{\rm mod}~i)i+(\lfloor \frac{b}{c} \rfloor c + b~{\rm mod}~i)}{c} \rfloor\\
+&amp;= \sum_{i=0}^n (i \frac{(a~{\rm mod}~i)i+b~{\rm mod}~i}{c}+i(i\lfloor \frac{a}{c} \rfloor + \lfloor \frac{b}{c} \rfloor )\\
+&amp;= g(a~{\rm mod}~c,b~{\rm mod}~c,c,n)+\sum_{i=0}^n (i^2 \lfloor \frac{a}{c} \rfloor + i \lfloor \frac{b}{c} \rfloor)\\
+&amp;=  g(a~{\rm mod}~c,b~{\rm mod}~c,c,n)+\frac{n(2n+1)(n+1)}{6} \lfloor \frac{a}{c} \rfloor +\frac{n(n+1)}{2} \lfloor \frac{b}{c} \rfloor\\
+\end{align}
+\]</span> 对于<span class="math inline">\(a&lt;c,b&lt;c\)</span>的情况，令<span class="math inline">\(m=\lfloor\frac{an+b}{c}\rfloor\)</span>，同理可得： <span class="math display">\[
+\begin{align}
+g(a,b,c,n)&amp;=\sum_{i=0}^n i \lfloor \frac{ai+b}{c} \rfloor\\
+&amp;=\sum_{j=0}^{m-1}\sum_{i=0}^n i [j &lt; \lfloor \frac{ai+b}{c} \rfloor]\\
+&amp;=\sum_{j=0}^{m-1}\sum_{i=0}^n i [i &gt; \lfloor \frac{cj-c-b-1}{a} \rfloor ]\\
+\end{align}
+\]</span> 令<span class="math inline">\(t=\lfloor \frac{cj-c-b-1}{a} \rfloor\)</span>，那么： <span class="math display">\[
+\begin{align}
+g(a,b,c,n) &amp;=\sum_{j=0}^{m-1}\sum_{i=0}^n i [i &gt; \lfloor \frac{cj-c-b-1}{a} \rfloor ]\\
+&amp;=\sum_{j=0}^{m-1}\sum_{i=0}^n i [i &gt; t]\\
+&amp;=\sum_{j=0}^{m-1}\frac{(t+1+n)(n-t)}{2}\\
+&amp;=\frac{1}{2}\sum_{j=0}^{m-1}(nt-t^2+n^2-nt+n-t)\\
+&amp;=\frac{1}{2}[mn(n+1) - \sum_{j=0}^{m-1}t^2-\sum_{j=0}^{m-1}t]\\
+&amp;=\frac{1}{2}[mn(n+1) - h(c,c-b-1,a,m-1) - f(c,c-b-1,a,m-1)]
+\end{align}
+\]</span></p>
+<h3 id="h函数的推导"><span class="math inline">\(h\)</span>函数的推导</h3>
 <h2 id="部分公式推导">部分公式推导</h2>
 <p><span class="math inline">\(\sum_{i=1}^{n} i^2 = \frac{n(n+1)(2n+1)}{6}\)</span>的推导：</p>
 <p>我们知道<span class="math inline">\(\sum_{i=1}^n i =\frac{n(n+1)}{2}\)</span>，但是我们没法直接从一次硬推到二次，我们考虑先求取其它包含<span class="math inline">\(i^2\)</span>的二次多项式，然后用其它项表示<span class="math inline">\(i^2\)</span>。</p>
@@ -463,7 +534,7 @@ x&amp;=\frac{2n^3+3n^2+n}{2}\\
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#扩展欧几里得"><span class="nav-number">1.</span> <span class="nav-text">扩展欧几里得</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#费马小定理"><span class="nav-number">2.</span> <span class="nav-text">费马小定理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#欧拉函数"><span class="nav-number">3.</span> <span class="nav-text">欧拉函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#性质"><span class="nav-number">3.1.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#欧拉定理"><span class="nav-number">3.2.</span> <span class="nav-text">欧拉定理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类欧几里得"><span class="nav-number">4.</span> <span class="nav-text">类欧几里得</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#部分公式推导"><span class="nav-number">4.1.</span> <span class="nav-text">部分公式推导</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#扩展欧几里得"><span class="nav-number">1.</span> <span class="nav-text">扩展欧几里得</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#费马小定理"><span class="nav-number">2.</span> <span class="nav-text">费马小定理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#欧拉函数"><span class="nav-number">3.</span> <span class="nav-text">欧拉函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#性质"><span class="nav-number">3.1.</span> <span class="nav-text">性质</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#欧拉定理"><span class="nav-number">3.2.</span> <span class="nav-text">欧拉定理</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#类欧几里得"><span class="nav-number">4.</span> <span class="nav-text">类欧几里得</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#引入"><span class="nav-number">4.1.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展"><span class="nav-number">4.2.</span> <span class="nav-text">扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#g函数的推导"><span class="nav-number">4.2.1.</span> <span class="nav-text">\(g\)函数的推导</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#h函数的推导"><span class="nav-number">4.2.2.</span> <span class="nav-text">\(h\)函数的推导</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部分公式推导"><span class="nav-number">4.3.</span> <span class="nav-text">部分公式推导</span></a></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->
