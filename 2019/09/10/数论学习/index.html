@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="Luvwgyx 的博客">
 <meta property="og:description" content="扩展欧几里得 形如\(ax+by=\gcd(a,b)\)，可以用扩展欧几里得求得整数解。 设\(ax_1+by_1=\gcd(a,b)\)，且我们已求得\(bx_2+(a\%b)y_2=\gcd(a,b)\)的解\(x_2,y_2\)，考虑如何推出\(x_1,y_1\)。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-11T07:57:46.925Z">
+<meta property="og:updated_time" content="2019-09-11T08:31:02.419Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数论学习">
 <meta name="twitter:description" content="扩展欧几里得 形如\(ax+by=\gcd(a,b)\)，可以用扩展欧几里得求得整数解。 设\(ax_1+by_1=\gcd(a,b)\)，且我们已求得\(bx_2+(a\%b)y_2=\gcd(a,b)\)的解\(x_2,y_2\)，考虑如何推出\(x_1,y_1\)。">
@@ -284,7 +284,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-11 15:57:46" itemprop="dateModified" datetime="2019-09-11T15:57:46+08:00">2019-09-11</time>
+                <time title="修改时间：2019-09-11 16:31:02" itemprop="dateModified" datetime="2019-09-11T16:31:02+08:00">2019-09-11</time>
               </span>
             
           
@@ -438,7 +438,7 @@ h(a,b,c,n) =&amp; \sum_{i=0}^n \lfloor \frac{ai+b}{c} \rfloor ^2\\
 &amp;+(\frac{(a~{\rm mod}~c)i+b~{\rm mod}~c}{2})^2\\
 =&amp;\sum_{i=0}^n[(i\lfloor \frac{a}{c} \rfloor)^2+2i\lfloor \frac{a}{c} \rfloor \lfloor \frac{b}{c} \rfloor + \lfloor \frac{b}{c} \rfloor ^2] + 2\lfloor \frac{a}{c} \rfloor g(a~{\rm mod}~c,b~{\rm mod}~c,c,n)\\
 &amp;+2 \lfloor \frac{b}{c} \rfloor f(a~{\rm mod}~c,b~{\rm mod}~c,c,n)+h(a~{\rm mod}~c,b~{\rm mod}~c,c,n)\\
-=&amp;\frac{n(2n+1)(n+1)}{6}\lfloor \frac{a}{c} \rfloor ^2 + n(n+1)\lfloor \frac{a}{c} \rfloor \lfloor \frac{b}{c} \rfloor +(n+1) \lfloor \frac{b}{c} \rfloor\\
+=&amp;\frac{n(2n+1)(n+1)}{6}\lfloor \frac{a}{c} \rfloor ^2 + n(n+1)\lfloor \frac{a}{c} \rfloor \lfloor \frac{b}{c} \rfloor +(n+1) \lfloor \frac{b}{c} \rfloor^2\\
 &amp;+2\lfloor \frac{a}{c} \rfloor g(a~{\rm mod}~c,b~{\rm mod}~c,c,n)+2 \lfloor \frac{b}{c} \rfloor f(a~{\rm mod}~c,b~{\rm mod}~c,c,n)\\
 &amp;+h(a~{\rm mod}~c,b~{\rm mod}~c,c,n)\\
 \end{align*}
@@ -475,7 +475,7 @@ g(a~{\rm mod}~c,b~{\rm mod}~c,c,n)+\frac{n(2n+1)(n+1)}{6} \lfloor \frac{a}{c} \r
 \end{cases}\\
 h(a,b,c,n)&amp;=
 \begin{cases}
-{\frac{n(2n+1)(n+1)}{6}\lfloor \frac{a}{c} \rfloor ^2 + n(n+1)\lfloor \frac{a}{c} \rfloor \lfloor \frac{b}{c} \rfloor +(n+1) \lfloor \frac{b}{c} \rfloor\\+2\lfloor \frac{a}{c} \rfloor g(a~{\rm mod}~c,b~{\rm mod}~c,c,n)+2 \lfloor \frac{b}{c} \rfloor f(a~{\rm mod}~c,b~{\rm mod}~c,c,n)\\+h(a~{\rm mod}~c,b~{\rm mod}~c,c,n)} &amp; {a \geqslant c , b\geqslant c}\\
+{\frac{n(2n+1)(n+1)}{6}\lfloor \frac{a}{c} \rfloor ^2 + n(n+1)\lfloor \frac{a}{c} \rfloor \lfloor \frac{b}{c} \rfloor +(n+1) \lfloor \frac{b}{c} \rfloor^2\\+2\lfloor \frac{a}{c} \rfloor g(a~{\rm mod}~c,b~{\rm mod}~c,c,n)+2 \lfloor \frac{b}{c} \rfloor f(a~{\rm mod}~c,b~{\rm mod}~c,c,n)\\+h(a~{\rm mod}~c,b~{\rm mod}~c,c,n)} &amp; {a \geqslant c , b\geqslant c}\\
 {nm(m+1)-2g(c,c-b-1,a,m-1)+2f(c,c-b-1,a,m-1)\\-f(a,b,c,n)} &amp; {a&lt;c,b&lt;c}
 \end{cases}
 \end{align*}
