@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="Luvwgyx 的博客">
 <meta property="og:description" content="乘法逆元 如果一个线性同余方程\(ax \equiv 1 ({\rm mod}~p)\)，则称\(x\)为\(p\)在\({\rm mod} ~ p\)意义下的逆元，记作\(a^{-1}\)。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-12T06:54:47.142Z">
+<meta property="og:updated_time" content="2019-09-15T12:05:11.779Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数论学习(Part 2)">
 <meta name="twitter:description" content="乘法逆元 如果一个线性同余方程\(ax \equiv 1 ({\rm mod}~p)\)，则称\(x\)为\(p\)在\({\rm mod} ~ p\)意义下的逆元，记作\(a^{-1}\)。">
@@ -273,11 +273,19 @@
                 
               
 
-              <time title="创建时间：2019-09-12 10:15:22 / 修改时间：14:54:47" itemprop="dateCreated datePublished" datetime="2019-09-12T10:15:22+08:00">2019-09-12</time>
+              <time title="创建时间：2019-09-12 10:15:22" itemprop="dateCreated datePublished" datetime="2019-09-12T10:15:22+08:00">2019-09-12</time>
             </span>
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2019-09-15 20:05:11" itemprop="dateModified" datetime="2019-09-15T20:05:11+08:00">2019-09-15</time>
+              </span>
             
           
             <span class="post-meta-item">
@@ -326,11 +334,11 @@
 <p>那么当我们要求解的是模一个质数意义下的逆元时，我们可以得到<span class="math inline">\(ax \equiv a^{p-1} ( {\rm mod}~p) \Leftrightarrow x \equiv a^{p-2} ({\rm mod}~p)\)</span>，这样我们就可以用快速幂求解了。</p>
 <h2 id="线性求1到n的逆元">线性求<span class="math inline">\(1\)</span>到<span class="math inline">\(n\)</span>的逆元</h2>
 <p>求<span class="math inline">\(1,2, \cdots , n\)</span>这些数的逆元，单个求的复杂度为<span class="math inline">\(O(n \log n)\)</span>，我们考虑如何<span class="math inline">\(O(n)\)</span>求解。</p>
-<p>设<span class="math inline">\(t=\frac{p}{i},k=m~{\rm mod}~p\)</span>，那么 <span class="math display">\[
+<p>设<span class="math inline">\(t=\frac{p}{i},k=p~{\rm mod}~i\)</span>，那么 <span class="math display">\[
 ti+k \equiv 0 ({\rm mod }~p)\\
 -ti \equiv k ({\rm mod } ~ p)\\
 -t\times inv_k \equiv inv_i ({\rm mod } ~ p)\\
-inv_i=-(p/i)~inv_{m~{\rm mod}~i}\\
+inv_i=-(p/i)~inv_{p~{\rm mod}~i}\\
 \]</span> 这样我们就可以线性递推求出<span class="math inline">\(1\)</span>到<span class="math inline">\(n\)</span>的逆元了：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">    inv[<span class="number">1</span>]=<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;=n;i++)inv[i]=(-mod/i)*inv[mod%i]%mod;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>但是我们发现这样子做会出现负数，我们处理一下：</p>
