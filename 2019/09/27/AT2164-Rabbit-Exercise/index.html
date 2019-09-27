@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="Luvwgyx 的博客">
 <meta property="og:description" content="题目链接 AtCoder 题意简述 有\(n\)只兔子在数轴上，数轴编号从\(1\)到\(n\)，第\(i\)只兔子的初始位置是\(X_i\)。 他们会以如下方式进行锻炼： 一轮包含\(m\)个跳跃，第\(j\)个进行跳跃的是兔子\(a_j(1 &amp;lt; a_j &amp;lt; n)\)，对于每一个跳跃，兔子\(a_j\)都会等概率地从\(a_j-1\)和\(a_j+1\)中选择一个（假设选择的是\(x">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-27T06:48:03.783Z">
+<meta property="og:updated_time" content="2019-09-27T06:53:47.688Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[AT2164]Rabbit Exercise">
 <meta name="twitter:description" content="题目链接 AtCoder 题意简述 有\(n\)只兔子在数轴上，数轴编号从\(1\)到\(n\)，第\(i\)只兔子的初始位置是\(X_i\)。 他们会以如下方式进行锻炼： 一轮包含\(m\)个跳跃，第\(j\)个进行跳跃的是兔子\(a_j(1 &amp;lt; a_j &amp;lt; n)\)，对于每一个跳跃，兔子\(a_j\)都会等概率地从\(a_j-1\)和\(a_j+1\)中选择一个（假设选择的是\(x">
@@ -273,7 +273,7 @@
                 
               
 
-              <time title="创建时间：2019-09-27 11:41:34 / 修改时间：14:48:03" itemprop="dateCreated datePublished" datetime="2019-09-27T11:41:34+08:00">2019-09-27</time>
+              <time title="创建时间：2019-09-27 11:41:34 / 修改时间：14:53:47" itemprop="dateCreated datePublished" datetime="2019-09-27T11:41:34+08:00">2019-09-27</time>
             </span>
           
             
@@ -320,7 +320,7 @@
 <p>他们会以如下方式进行锻炼：</p>
 <p>一轮包含<span class="math inline">\(m\)</span>个跳跃，第<span class="math inline">\(j\)</span>个进行跳跃的是兔子<span class="math inline">\(a_j(1 &lt; a_j &lt; n)\)</span>，对于每一个跳跃，兔子<span class="math inline">\(a_j\)</span>都会等概率地从<span class="math inline">\(a_j-1\)</span>和<span class="math inline">\(a_j+1\)</span>中选择一个（假设选择的是<span class="math inline">\(x\)</span>），那么兔子<span class="math inline">\(a_j\)</span>会跳到他当前坐标关于<span class="math inline">\(x\)</span>的对称坐标。</p>
 <p>兔子们会进行连续<span class="math inline">\(k\)</span>轮这样的跳跃，对于每个兔子求出最后他的期望坐标。</p>
-<p><span class="math inline">\(3 \leqslant n \leqslant 10^5,X_i \in \Z,|a_i| \leqslant 10^9,1 \leqslant m \leqslant 10^5,2 \leqslant a_i \leqslant n-1,1\leqslant k \leqslant 10^{18}\)</span>。</p>
+<p><span class="math inline">\(3 \leqslant n \leqslant 10^5,X_i \in \Zeta,|a_i| \leqslant 10^9,1 \leqslant m \leqslant 10^5,2 \leqslant a_i \leqslant n-1,1\leqslant k \leqslant 10^{18}\)</span>。</p>
 <a id="more"></a>
 <h1 id="解题思路">解题思路</h1>
 <p>首先翻转操作相当于<span class="math inline">\(A_i=2x-a_i\)</span>，由期望的线性性可知<span class="math inline">\(E(A_i)=E(2x)-E(a_i)\)</span>。</p>
