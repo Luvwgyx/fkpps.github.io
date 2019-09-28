@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+
+
+
+
+
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/pic.jpg?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon32x32.jpg?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16x16.jpg?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
+    back2top: {"enable":true,"sidebar":true,"scrollpercent":true},
+    bookmark: {"enable":true,"color":"#222","save":"manual"},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="题目链接 AtCoder 题意简述 给定一棵边的颜色全为蓝色的树和一棵边的颜色全为红色的树，一次操作如下：选择蓝树上的一条路径\((u,v)\)，任意选择路径上的一条边删去，然后在\(u\)和\(v\)之间连一条红色的边，问能否在\(n-1\)次操作内将蓝树变为与红树形态和颜色都一致。">
+<meta name="keywords" content="树链剖分">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[AT2377]Blue and Red Tree">
+<meta property="og:url" content="http://yoursite.com/2019/09/28/AT2377-Blue-and-Red-Tree/index.html">
+<meta property="og:site_name" content="Luvwgyx 的博客">
+<meta property="og:description" content="题目链接 AtCoder 题意简述 给定一棵边的颜色全为蓝色的树和一棵边的颜色全为红色的树，一次操作如下：选择蓝树上的一条路径\((u,v)\)，任意选择路径上的一条边删去，然后在\(u\)和\(v\)之间连一条红色的边，问能否在\(n-1\)次操作内将蓝树变为与红树形态和颜色都一致。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-09-28T01:57:37.709Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[AT2377]Blue and Red Tree">
+<meta name="twitter:description" content="题目链接 AtCoder 题意简述 给定一棵边的颜色全为蓝色的树和一棵边的颜色全为红色的树，一次操作如下：选择蓝树上的一条路径\((u,v)\)，任意选择路径上的一条边删去，然后在\(u\)和\(v\)之间连一条红色的边，问能否在\(n-1\)次操作内将蓝树变为与红树形态和颜色都一致。">
+  <link rel="canonical" href="http://yoursite.com/2019/09/28/AT2377-Blue-and-Red-Tree/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>[AT2377]Blue and Red Tree | Luvwgyx 的博客</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Luvwgyx 的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">万物皆有裂痕，那是光进来的地方。</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-about">
+      
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
+  </ul>
+
+</nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
+</div>
+    </header>
+
+    
+  <a class="book-mark-link book-mark-link-fixed" href="#"></a>
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+            
+
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+      <article itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block post">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/28/AT2377-Blue-and-Red-Tree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Luvwgyx">
+      <meta itemprop="description" content="Luvwgyx 的博客">
+      <meta itemprop="image" content="/images/pic.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Luvwgyx 的博客">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">[AT2377]Blue and Red Tree
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              
+                
+              
+
+              <time title="创建时间：2019-09-28 09:51:26 / 修改时间：09:57:37" itemprop="dateCreated datePublished" datetime="2019-09-28T09:51:26+08:00">2019-09-28</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/题解/" itemprop="url" rel="index"><span itemprop="name">题解</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            <span class="post-meta-item" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="题目链接">题目链接</h1>
+<p><a href="https://agc014.contest.atcoder.jp/tasks/agc014_e" target="_blank" rel="noopener">AtCoder</a></p>
+<h1 id="题意简述">题意简述</h1>
+<p>给定一棵边的颜色全为蓝色的树和一棵边的颜色全为红色的树，一次操作如下：选择蓝树上的一条路径<span class="math inline">\((u,v)\)</span>，任意选择路径上的一条边删去，然后在<span class="math inline">\(u\)</span>和<span class="math inline">\(v\)</span>之间连一条红色的边，问能否在<span class="math inline">\(n-1\)</span>次操作内将蓝树变为与红树形态和颜色都一致。</p>
+<a id="more"></a>
+<h1 id="解题思路">解题思路</h1>
+<p>手玩一下就可以发现，原题中的操作可以转化为这样：在红树上找一条边，对应到蓝树上的一条路径，在这个路径上删去一条边，要求每次这个红色边的两个端点联通。</p>
+<p>所以我们每次只需要找到恰好被红树上的边所对应的蓝树上的路径覆盖一次的边，将其删去就好了，然后链上<span class="math inline">\(-1\)</span>，用树剖维护，时间复杂度<span class="math inline">\(O(n \log^2n)\)</span>。</p>
+<h1 id="参考代码">参考代码</h1>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*Program from Luvwgyx*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;vector&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstdio&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;cstring&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;algorithm&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> int long long</span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="keyword">int</span> maxn=<span class="number">1e5</span>+<span class="number">10</span>;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">edge</span>&#123;</span><span class="keyword">int</span> to,nxt;&#125;e[maxn&lt;&lt;<span class="number">1</span>];</span><br><span class="line"><span class="keyword">int</span> n,tot,idx=<span class="number">-1</span>,pos,head[maxn],dfn[maxn],del[maxn],a[maxn],b[maxn],c[maxn],d[maxn];</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">read</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> x=<span class="number">0</span>,f=<span class="number">1</span>;<span class="keyword">char</span> ch=getchar();</span><br><span class="line">    <span class="keyword">while</span>(ch&lt;<span class="string">'0'</span>||ch&gt;<span class="string">'9'</span>)&#123;<span class="keyword">if</span>(ch==<span class="string">'-'</span>)f=<span class="number">-1</span>;ch=getchar();&#125;</span><br><span class="line">    <span class="keyword">while</span>(ch&gt;=<span class="string">'0'</span>&amp;&amp;ch&lt;=<span class="string">'9'</span>)&#123;x=x*<span class="number">10</span>+ch-<span class="string">'0'</span>;ch=getchar();&#125;</span><br><span class="line">    <span class="keyword">return</span> x*f;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(x&lt;<span class="number">0</span>)<span class="built_in">putchar</span>(<span class="string">'-'</span>),x=-x;</span><br><span class="line">    <span class="keyword">if</span>(x&gt;<span class="number">9</span>)print(x/<span class="number">10</span>);</span><br><span class="line">    <span class="built_in">putchar</span>(x%<span class="number">10</span>+<span class="string">'0'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">write</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;print(x);<span class="built_in">puts</span>(<span class="string">""</span>);&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> u,<span class="keyword">int</span> v)</span></span>&#123;e[++tot].to=v;e[tot].nxt=head[u];head[u]=tot;&#125;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Segment_Tree</span>&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">node</span>&#123;</span><span class="keyword">int</span> w,f;<span class="built_in">vector</span>&lt;<span class="keyword">int</span> &gt;id;&#125;tree[maxn&lt;&lt;<span class="number">2</span>];</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> k)</span></span>&#123;tree[k].w=min(tree[k&lt;&lt;<span class="number">1</span>].w,tree[k&lt;&lt;<span class="number">1</span>|<span class="number">1</span>].w);&#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">down</span><span class="params">(<span class="keyword">int</span> k)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(tree[k].f)&#123;</span><br><span class="line">            tree[k&lt;&lt;<span class="number">1</span>].w+=tree[k].f;tree[k&lt;&lt;<span class="number">1</span>|<span class="number">1</span>].w+=tree[k].f;</span><br><span class="line">            tree[k&lt;&lt;<span class="number">1</span>].f+=tree[k].f;tree[k&lt;&lt;<span class="number">1</span>|<span class="number">1</span>].f+=tree[k].f;</span><br><span class="line">            tree[k].f=<span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> k,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(x&lt;=l&amp;&amp;r&lt;=y)&#123;tree[k].id.push_back(v);tree[k].w++;tree[k].f++;<span class="keyword">return</span> ;&#125;</span><br><span class="line">        down(k);<span class="keyword">int</span> mid=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(x&lt;=mid)insert(k&lt;&lt;<span class="number">1</span>,l,mid,x,y,v);</span><br><span class="line">        <span class="keyword">if</span>(mid&lt;y)insert(k&lt;&lt;<span class="number">1</span>|<span class="number">1</span>,mid+<span class="number">1</span>,r,x,y,v);</span><br><span class="line">        update(k);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">change</span><span class="params">(<span class="keyword">int</span> k,<span class="keyword">int</span> l,<span class="keyword">int</span> r,<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(x&lt;=l&amp;&amp;r&lt;=y)&#123;tree[k].w+=v;tree[k].f+=v;<span class="keyword">return</span> ;&#125;</span><br><span class="line">        down(k);<span class="keyword">int</span> mid=(l+r)&gt;&gt;<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(x&lt;=mid)change(k&lt;&lt;<span class="number">1</span>,l,mid,x,y,v);</span><br><span class="line">        <span class="keyword">if</span>(mid&lt;y)change(k&lt;&lt;<span class="number">1</span>|<span class="number">1</span>,mid+<span class="number">1</span>,r,x,y,v);</span><br><span class="line">        update(k);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">query</span><span class="params">(<span class="keyword">int</span> k,<span class="keyword">int</span> l,<span class="keyword">int</span> r)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(tree[k].w&gt;<span class="number">1</span>)<span class="keyword">return</span> <span class="number">-1</span>;<span class="keyword">int</span> ret=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(!tree[k].id.empty()&amp;&amp;del[tree[k].id.back()])tree[k].id.pop_back();</span><br><span class="line">        <span class="keyword">if</span>(!tree[k].id.empty())ret=tree[k].id.back();</span><br><span class="line">        <span class="keyword">if</span>(l==r)&#123;pos=l;<span class="keyword">return</span> ret;&#125;<span class="keyword">int</span> mid=(l+r)&gt;&gt;<span class="number">1</span>,now;down(k);</span><br><span class="line">        now=query(k&lt;&lt;<span class="number">1</span>,l,mid);<span class="keyword">if</span>(now!=<span class="number">-1</span>)&#123;<span class="keyword">if</span>(now)<span class="keyword">return</span> now;<span class="keyword">if</span>(ret)<span class="keyword">return</span> ret;&#125;</span><br><span class="line">        now=query(k&lt;&lt;<span class="number">1</span>|<span class="number">1</span>,mid+<span class="number">1</span>,r);<span class="keyword">if</span>(now!=<span class="number">-1</span>)&#123;<span class="keyword">if</span>(now)<span class="keyword">return</span> now;<span class="keyword">if</span>(ret)<span class="keyword">return</span> ret;&#125;</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;T;</span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">Heavy_Light_Decomposition</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> dep[maxn],size[maxn],fa[maxn],top[maxn],son[maxn];</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">build</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> deep)</span></span>&#123;</span><br><span class="line">        dep[x]=deep;size[x]=<span class="number">1</span>;<span class="keyword">int</span> mx=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=head[x],v=e[i].to;i;i=e[i].nxt,v=e[i].to)</span><br><span class="line">            <span class="keyword">if</span>(v!=fa[x])&#123;</span><br><span class="line">                fa[v]=x;build(v,deep+<span class="number">1</span>);size[x]+=size[v];</span><br><span class="line">                <span class="keyword">if</span>(size[v]&gt;mx)mx=size[v],son[x]=v;</span><br><span class="line">            &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(!x)<span class="keyword">return</span> ;dfn[x]=++idx;</span><br><span class="line">        top[x]=son[fa[x]]==x?top[fa[x]]:x;dfs(son[x]);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=head[x],v=e[i].to;i;i=e[i].nxt,v=e[i].to)</span><br><span class="line">            <span class="keyword">if</span>(v!=fa[x]&amp;&amp;v!=son[x])dfs(v);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">insert</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">int</span> id)</span></span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(top[x]!=top[y])&#123;</span><br><span class="line">            <span class="keyword">if</span>(dep[top[x]]&lt;dep[top[y]])swap(x,y);</span><br><span class="line">            T.insert(<span class="number">1</span>,<span class="number">1</span>,n<span class="number">-1</span>,dfn[top[x]],dfn[x],id);</span><br><span class="line">            x=fa[top[x]];</span><br><span class="line">        &#125;<span class="keyword">if</span>(dfn[x]&gt;dfn[y])swap(x,y);</span><br><span class="line">        <span class="keyword">if</span>(x!=y)T.insert(<span class="number">1</span>,<span class="number">1</span>,n<span class="number">-1</span>,dfn[x]+<span class="number">1</span>,dfn[y],id);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">change</span><span class="params">(<span class="keyword">int</span> x,<span class="keyword">int</span> y,<span class="keyword">int</span> v)</span></span>&#123;</span><br><span class="line">        <span class="keyword">while</span>(top[x]!=top[y])&#123;</span><br><span class="line">            <span class="keyword">if</span>(dep[top[x]]&lt;dep[top[y]])swap(x,y);</span><br><span class="line">            T.change(<span class="number">1</span>,<span class="number">1</span>,n<span class="number">-1</span>,dfn[top[x]],dfn[x],v);</span><br><span class="line">            x=fa[top[x]];</span><br><span class="line">        &#125;<span class="keyword">if</span>(dfn[x]&gt;dfn[y])swap(x,y);</span><br><span class="line">        <span class="keyword">if</span>(x!=y)T.change(<span class="number">1</span>,<span class="number">1</span>,n<span class="number">-1</span>,dfn[x]+<span class="number">1</span>,dfn[y],v);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;HLD;</span><br><span class="line"><span class="function"><span class="keyword">signed</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    n=read();</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)&#123;</span><br><span class="line">        a[i]=read();b[i]=read();</span><br><span class="line">        add(a[i],b[i]);add(b[i],a[i]);</span><br><span class="line">    &#125;HLD.build(<span class="number">1</span>,<span class="number">1</span>);HLD.dfs(<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)&#123;</span><br><span class="line">        c[i]=read();d[i]=read();</span><br><span class="line">        HLD.insert(c[i],d[i],i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;n;i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(T.tree[<span class="number">1</span>].w!=<span class="number">1</span>)&#123;<span class="built_in">puts</span>(<span class="string">"NO"</span>);<span class="keyword">return</span> <span class="number">0</span>;&#125;</span><br><span class="line">        <span class="keyword">int</span> now=T.query(<span class="number">1</span>,<span class="number">1</span>,n<span class="number">-1</span>);del[now]=<span class="number">1</span>;</span><br><span class="line">        T.change(<span class="number">1</span>,<span class="number">1</span>,n<span class="number">-1</span>,pos,pos,maxn);</span><br><span class="line">        HLD.change(c[now],d[now],<span class="number">-1</span>);</span><br><span class="line">    &#125;<span class="built_in">puts</span>(<span class="string">"YES"</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+        
+      
+
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/树链剖分/" rel="tag"># 树链剖分</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2019/09/27/AT2164-Rabbit-Exercise/" rel="next" title="[AT2164]Rabbit Exercise">
+                  <i class="fa fa-chevron-left"></i> [AT2164]Rabbit Exercise
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+        
+        
+        
+        
+      
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#题目链接"><span class="nav-number">1.</span> <span class="nav-text">题目链接</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#题意简述"><span class="nav-number">2.</span> <span class="nav-text">题意简述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解题思路"><span class="nav-number">3.</span> <span class="nav-text">解题思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考代码"><span class="nav-number">4.</span> <span class="nav-text">参考代码</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image"
+      src="/images/pic.jpg"
+      alt="Luvwgyx">
+  <p class="site-author-name" itemprop="name">Luvwgyx</p>
+  <div class="site-description" itemprop="description">Luvwgyx 的博客</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+        
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">分类</span>
+        
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/Luvwgyx" title="GitHub &rarr; https://github.com/Luvwgyx" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:Luvwgyx@gmail.com" title="E-Mail &rarr; mailto:Luvwgyx@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="http://codeforces.com/profile/Luvwgyx" title="Codeforces &rarr; http://codeforces.com/profile/Luvwgyx" rel="noopener" target="_blank"><i class="fa fa-fw fa-code"></i>Codeforces</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://luvwgyx.com/" title="Luvwgyx &rarr; https://luvwgyx.com/" rel="noopener" target="_blank"><i class="fa fa-fw fa-code"></i>Luvwgyx</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://www.cnblogs.com/Luvwgyx/" title="博客园 &rarr; https://www.cnblogs.com/Luvwgyx/" rel="noopener" target="_blank"><i class="fa fa-fw fa-code"></i>博客园</a>
+      </span>
+    
+  </div>
+
+
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+      
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Luvwgyx</span>
+</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.3.0</div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+    <span class="post-meta-divider">|</span>
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+
+
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+<script src="/js/schemes/pisces.js?v=7.3.0"></script>
+
+<script src="/js/next-boot.js?v=7.3.0"></script><script src="/js/bookmark.js?v=7.3.0"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+  <script src="/js/local-search.js?v=7.3.0"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+<script type="text/x-mathjax-config">
+    MathJax.Ajax.config.path['mhchem'] = '//cdn.jsdelivr.net/npm/mathjax-mhchem@3';
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+        extensions: ['[mhchem]/mhchem.js'],
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
+
+  
+
+</body>
+</html>
