@@ -63,7 +63,7 @@
 <meta property="og:site_name" content="Luvwgyx 的博客">
 <meta property="og:description" content="乘法逆元 如果一个线性同余方程\(ax \equiv 1 ({\rm mod}~p)\)，则称\(x\)为\(p\)在\({\rm mod} ~ p\)意义下的逆元，记作\(a^{-1}\)。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-09-15T12:05:11.779Z">
+<meta property="og:updated_time" content="2019-11-19T02:49:27.544Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数论学习(Part 2)">
 <meta name="twitter:description" content="乘法逆元 如果一个线性同余方程\(ax \equiv 1 ({\rm mod}~p)\)，则称\(x\)为\(p\)在\({\rm mod} ~ p\)意义下的逆元，记作\(a^{-1}\)。">
@@ -284,7 +284,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-09-15 20:05:11" itemprop="dateModified" datetime="2019-09-15T20:05:11+08:00">2019-09-15</time>
+                <time title="修改时间：2019-11-19 10:49:27" itemprop="dateModified" datetime="2019-11-19T10:49:27+08:00">2019-11-19</time>
               </span>
             
           
@@ -350,6 +350,16 @@ inv_i=-(p/i)~inv_{p~{\rm mod}~i}\\
 <p>然后我们就可以用<span class="math inline">\(mul_{i-1} \times invv_i\)</span>来得出<span class="math inline">\(a_i\)</span>的逆元。</p>
 <p>参考代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">    mul[<span class="number">0</span>]=<span class="number">1</span>;<span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)mul[i]=mul[i<span class="number">-1</span>]*a[i]%mod;</span><br><span class="line">    invv[n]=power(mul[n],mod<span class="number">-2</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=n;i&gt;=<span class="number">1</span>;i--)invv[i<span class="number">-1</span>]=invv[i]*a[i]%mod;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>;i&lt;=n;i++)inv[i]=invv[i]*mul[i<span class="number">-1</span>]%mod; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="整除分块">整除分块</h1>
+<p>快速求解 <span class="math inline">\(\sum_{i=1}^{n} \lfloor \frac{n}{i} \rfloor\)</span>。</p>
+<p>我们发现： <span class="math display">\[
+\forall n \in N,|\{\lfloor \frac{n}{d} \rfloor |d \in N\}| \leqslant \lfloor 2 \sqrt{n} \rfloor
+\]</span> 其中<span class="math inline">\(|V|\)</span>表示<span class="math inline">\(V\)</span>这个集合的元素个数。</p>
+<p>证明：</p>
+<p>对于$d  <span class="math inline">\(，\)</span> <span class="math inline">\(有\)</span>n<span class="math inline">\(种取值，对于\)</span>d &gt; n <span class="math inline">\(，\)</span> n$，因此 $ <span class="math inline">\(也只有\)</span>n<span class="math inline">\(种取值，因此最多有\)</span>2 n $种取值。</p>
+<p>我们还能发现：</p>
+<p>设<span class="math inline">\(\lfloor \frac{n}{i} \rfloor = \lfloor \frac{n}{i&#39;} \rfloor\)</span>，则<span class="math inline">\(i&#39;\)</span>的最大值为<span class="math inline">\(\lfloor \frac{n}{\lfloor \frac{n}{i} \rfloor}\rfloor\)</span>。</p>
+<p>证明：</p>
 
     </div>
 
@@ -436,7 +446,7 @@ inv_i=-(p/i)~inv_{p~{\rm mod}~i}\\
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#乘法逆元"><span class="nav-number">1.</span> <span class="nav-text">乘法逆元</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展欧几里得法"><span class="nav-number">1.1.</span> <span class="nav-text">扩展欧几里得法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速幂法"><span class="nav-number">1.2.</span> <span class="nav-text">快速幂法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性求1到n的逆元"><span class="nav-number">1.3.</span> <span class="nav-text">线性求\(1\)到\(n\)的逆元</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性求任意n个数的逆元"><span class="nav-number">1.4.</span> <span class="nav-text">线性求任意\(n\)个数的逆元</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#乘法逆元"><span class="nav-number">1.</span> <span class="nav-text">乘法逆元</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#扩展欧几里得法"><span class="nav-number">1.1.</span> <span class="nav-text">扩展欧几里得法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#快速幂法"><span class="nav-number">1.2.</span> <span class="nav-text">快速幂法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性求1到n的逆元"><span class="nav-number">1.3.</span> <span class="nav-text">线性求\(1\)到\(n\)的逆元</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线性求任意n个数的逆元"><span class="nav-number">1.4.</span> <span class="nav-text">线性求任意\(n\)个数的逆元</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#整除分块"><span class="nav-number">2.</span> <span class="nav-text">整除分块</span></a></li></ol></div>
         
       </div>
       <!--/noindex-->
@@ -454,7 +464,7 @@ inv_i=-(p/i)~inv_{p~{\rm mod}~i}\\
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">31</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
